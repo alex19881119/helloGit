@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ <hibernate-mapping package="com.itheima.domain">
+ 	<class name="LinkMan" table="cst_linkman">
+ 		<id name="lkm_id" column="lkm_id">
+ 			<!-- 
+ 			identity：主键自增
+ 			increment：主键自增（了解），由hibernate维护，每次插入前先查询表中最大值+1作为新主键值
+ 			sequence：oracle中的主键生成策略
+ 			hilo：高低位算法 
+ 			native：hilo+sequence+identity自动三选一
+ 			uuid：产生随机字符串作为主键，主键类型必须为String
+ 			assigned：自然主键生成策略。
+ 			 -->
+ 			<generator class="native"></generator>
+ 		</id>
+ 		<!-- 可选属性 type
+ 				not-null
+ 				length -->
+ 		<property name="lkm_gender"  ></property>
+ 		<property name="lkm_name" ></property>
+ 		<property name="lkm_phone" ></property>
+ 		<property name="lkm_mobile" ></property>
+ 		<property name="lkm_email"></property>
+ 		<property name="lkm_qq"></property>
+ 		<property name="lkm_position"></property>
+ 		<property name="lkm_memo"></property>
+ 		<!-- 表达多对一关系 -->
+ 		<!-- 
+ 		name:集合属性名
+ 		column：外键列名
+ 		class：与我关联的对象完整类名 
+ 		-->
+ 		<!-- 级联操作cascade 
+ 			save-update  级联保存更新
+ 			delete  级联删除
+ 			all：save-update+delete
+ 			级联操作：简化操作
+ 		-->
+ 		<many-to-one name="customer" column="lkm_cust_id" class="Customer"></many-to-one>
+ 		
+ 	</class>
+ </hibernate-mapping>   

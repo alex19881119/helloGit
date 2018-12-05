@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		 					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		 					http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd 
+		 					http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+<!-- 指定spring读取db.properties -->
+<context:property-placeholder location="classpath:db.properties"/>
+<!-- 配置c3p0连接池 -->
+<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+	<property name="driverClass" value="${jdbc.driverClass}"></property>
+	<property name="user" value="${jdbc.user}"></property>
+	<property name="password" value="${jdbc.password}"></property>
+</bean>
+
+<!-- 配置事务核心管理器 -->
+<bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager ">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+
+<!-- 配置通知 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+			<tx:attributes>
+				
+				<tx:method name="save*" propagation="REQUIRED" read-only="false" isolation="REPEATABLE_READ"/>
+				<tx:method name="persist*" propagation="REQUIRED" read-only="false" isolation="REPEATABLE_READ"/>
+				<tx:method name="update*" propagation="REQUIRED" read-only="false" isolation="REPEATABLE_READ"/>
+				<tx:method name="modify*" propagation="REQUIRED" read-only="false" isolation="REPEATABLE_READ"/>
+				<tx:method name="delete*" propagation="REQUIRED" read-only="false" isolation="REPEATABLE_READ"/>
+				<tx:method name="remove*" propagation="REQUIRED" read-only="false" isolation="REPEATABLE_READ"/>
+				<tx:method name="get*" propagation="REQUIRED" read-only="true" isolation="REPEATABLE_READ"/>
+				<tx:method name="find*" propagation="REQUIRED" read-only="true" isolation="REPEATABLE_READ"/>
+				<tx:method name="*" read-only="false" propagation="REQUIRED" isolation="REPEATABLE_READ"/>
+			</tx:attributes>
+</tx:advice>
+
+<!-- 配置织入 -->
+<aop:config>
+	<aop:pointcut expression="execution(* com.itheima.service.impl.*ServiceImpl.*(..))" id="txPc"/>
+	<!-- 切面，通知+切点 -->
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
+</aop:config>
+
+<!-- 开启注解事务 -->
+<!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+
+<!-- 将sessionfactory配置到spring容器中 -->
+<!-- 加载配置方案一：仍然使用外面的hibernate.cfg.xml配置信息 -->
+
+<!-- <bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+</bean> -->
+<!-- 方案二 :在spring配置中放置hibernate配置信息-->
+<bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"></property>
+	<property name="hibernateProperties">
+		<props>
+			<!-- <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+			<prop key="hibernate.connection.url">jdbc:mysql:///crm</prop>
+			<prop key="hibernate.connection.username">root</prop>
+			<prop key="hibernate.connection.password">159635</prop> -->
+			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<prop key="hibernate.show_sql">true</prop>
+			<prop key="hibernate.format_sql">true</prop>
+			<prop key="hibernate.hbm2ddl.auto">update</prop>
+		</props>
+	</property>
+	<!-- 引入orm元数据 指定路径-->
+	<property name="mappingDirectoryLocations" value="classpath:com/itheima/domain"></property>
+</bean>
+
+<!-- action对象一定是多例 -->
+<bean name="userAction" class="com.itheima.action.UserAction" scope="prototype">
+	<property name="userService" ref="userService"></property>
+</bean>		 					
+<bean name="customerAction" class="com.itheima.action.CustomerAction" scope="prototype">
+	<property name="customerService" ref="customerService"></property>
+</bean>		 					
+<bean name="baseDictAction" class="com.itheima.action.BaseDictAction" scope="prototype">
+	<property name="baseDictService" ref="baseDictService"></property>
+</bean>		 					
+<bean name="linkManAction" class="com.itheima.action.LinkManAction" scope="prototype">
+	<property name="linkManService" ref="linkManService"></property>
+</bean>		 					
+		 					
+<bean name="userService" class="com.itheima.service.impl.UserServiceImpl">
+	<property name="ud" ref="userDao"></property>
+</bean>	
+	 					
+<bean name="customerService" class="com.itheima.service.impl.CustomerServiceImpl">
+	<property name="cd" ref="customerDao"></property>
+</bean>			 					
+<bean name="baseDictService" class="com.itheima.service.impl.BaseDictServiceImpl">
+	<property name="bdd" ref="baseDictDao"></property>
+</bean>			 					
+<bean name="linkManService" class="com.itheima.service.impl.LinkManServiceImpl">
+	<property name="lmd" ref="linkManDao"></property>
+</bean>			 					
+
+<bean name="userDao" class="com.itheima.dao.impl.UserDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>	
+		 					
+<bean name="customerDao" class="com.itheima.dao.impl.CustomerDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>			 					
+<bean name="baseDictDao" class="com.itheima.dao.impl.BaseDictDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>			 					
+<bean name="linkManDao" class="com.itheima.dao.impl.LinkManDaoImpl">
+	<property name="sessionFactory" ref="sessionFactory"></property>
+</bean>			 					
+
+		 					
+		 					
+		 					
+		 					
+		 					
+</beans>

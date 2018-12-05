@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+	
+	
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql:///crm</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">159635</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<!-- 
+		#hibernate.show_sql true
+		hibernate.format_sql true
+		## auto schema export
+		 -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<!-- 
+		#hibernate.hbm2ddl.auto create-drop 开发测试用
+		#hibernate.hbm2ddl.auto create  开发测试用
+		#hibernate.hbm2ddl.auto update	
+		#hibernate.hbm2ddl.auto validate
+		 -->
+		
+		
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
+		<mapping resource="com/itheima/domain/Customer.hbm.xml"/>
+		<mapping resource="com/itheima/domain/LinkMan.hbm.xml"/>
+		<mapping resource="com/itheima/domain/User.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>
