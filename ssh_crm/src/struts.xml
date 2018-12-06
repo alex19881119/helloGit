@@ -13,9 +13,11 @@
 		<interceptor name="privilegeInterceptor" class="com.itheima.interceptor.PrivilegeInterceptor"></interceptor>
 		<!-- 配置拦截器栈 -->
 		<interceptor-stack name="myStack">
+			
 			<interceptor-ref name="privilegeInterceptor">
-				<param name="">login,regist</param>
+				<param name="excludeMethods">login,regist</param>
 			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</interceptor-stack>
 	</interceptors>
 	<!-- 指定默认拦截器栈 -->
@@ -39,6 +41,7 @@
 		</action>
 		
 		<action name="CustomerAction_*" class="customerAction" method="{1}">
+			<result name="error">/jsp/error.jsp</result>
 			<result name="list">/jsp/customer/list.jsp</result>
 			<result name="edit">/jsp/customer/add.jsp</result>
 			<result name="toList" type="redirectAction">
@@ -54,8 +57,18 @@
 			<result name="list">/jsp/linkman/list.jsp </result>
 			<result name="add">/jsp/linkman/add.jsp </result>
 			<result name="toList" type="redirectAction">
-				<param name="namespqac">/</param>
+				<param name="namespace">/</param>
 				<param name="actionName">LinkManAction_list</param>
+			</result>
+		</action>
+		
+		<action name="SaleVisitAction_*" class="saleVisitAction" method="{1}">
+			<result name="error">/jsp/error.jsp</result>
+			<result name="add">/jsp/salevisit/add.jsp</result>
+			<result name="list">/jsp/salevisit/list.jsp</result>
+			<result name="toList" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">SaleVisitAction_list</param>
 			</result>
 		</action>
 	

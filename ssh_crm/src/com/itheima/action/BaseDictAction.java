@@ -21,6 +21,7 @@ public class BaseDictAction extends ActionSupport{
 		//2.将list转换为json
 		String json = JSONArray.fromObject(list).toString();
 		//3.将json发送给浏览器
+		
 		ServletActionContext.getResponse().setContentType("application/json;charset=utf-8");
 		ServletActionContext.getResponse().getWriter().write(json);
 		return null;//不需要结果处理

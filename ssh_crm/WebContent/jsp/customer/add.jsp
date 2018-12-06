@@ -41,7 +41,7 @@
 		method="post" enctype="multipart/form-data">
 		
 		<input type="hidden" name="cust_id" value="${customer.cust_id }">
-
+		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
 				<TR>
