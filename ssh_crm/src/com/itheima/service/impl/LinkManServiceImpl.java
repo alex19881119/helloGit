@@ -46,4 +46,11 @@ public class LinkManServiceImpl implements LinkManService{
 		this.lmd = lmd;
 	}
 
+
+	@Override
+	public void delete(LinkMan linkMan) {
+		lmd.delete(linkMan);
+		
+	}
+
 }

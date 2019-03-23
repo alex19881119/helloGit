@@ -119,7 +119,7 @@ function changSize(pageSize){
 													<TD>
 													<a href="${pageContext.request.contextPath }/LinkManAction_toEdit?lkm_id=${linkman.lkm_id }">修改</a>
 													&nbsp;&nbsp;
-													<a href="${pageContext.request.contextPath }/linkmanServlet?method=delete&lkmId=${linkman.lkm_id}">删除</a>
+													<a href="${pageContext.request.contextPath }/LinkManAction_delete?lkm_id=${linkman.lkm_id }">删除</a>
 													</TD>
 												</TR>
 												

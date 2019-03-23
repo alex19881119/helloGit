@@ -45,6 +45,12 @@ public class LinkManAction extends ActionSupport implements ModelDriven<LinkMan>
 		linkManService.save(linkMan);
 		
 		return "toList";
+	}
+	
+	public String delete() throws Exception {
+		linkManService.delete(linkMan);
+			
+		return "toList";
 		
 	}
 	public String toEdit() throws Exception {

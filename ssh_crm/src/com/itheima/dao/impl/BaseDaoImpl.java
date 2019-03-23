@@ -2,7 +2,6 @@ package com.itheima.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -10,7 +9,6 @@ import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import com.itheima.dao.BaseDao;
-import com.itheima.domain.Customer;
 
 public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T>{
 	

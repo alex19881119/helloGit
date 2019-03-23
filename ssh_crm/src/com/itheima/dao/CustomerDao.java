@@ -7,5 +7,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import com.itheima.domain.Customer;
 
 public interface CustomerDao extends BaseDao<Customer>{
+	
+	public List<Object[]> getIndustryCount(String source);
 
-	}
+}

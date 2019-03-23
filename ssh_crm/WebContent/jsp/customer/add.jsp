@@ -39,9 +39,9 @@
 	<FORM id=form1 name=form1
 		action="${pageContext.request.contextPath }/CustomerAction_add" 
 		method="post" enctype="multipart/form-data">
-		
+		<c:if test="${customer.cust_id!=null}">
 		<input type="hidden" name="cust_id" value="${customer.cust_id }">
-		
+		</c:if>
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
 				<TR>

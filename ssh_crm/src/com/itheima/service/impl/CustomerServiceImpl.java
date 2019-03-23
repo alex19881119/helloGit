@@ -56,6 +56,22 @@ public class CustomerServiceImpl implements CustomerService{
 
 
 
+	@Override
+	public List<Object[]> getIndustryCount(String source) {
+		
+		return cd.getIndustryCount(source);
+	}
+
+
+
+	@Override
+	public void delete(Customer customer) {
+		cd.delete(customer);
+		
+	}
+
+
+
 	
 
 }

@@ -1,6 +1,7 @@
 package com.itheima.action;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
@@ -62,7 +63,24 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
 		ActionContext.getContext().put("customer", c);
 		return "edit";
 	}
-
+	
+	public String industryCount() throws Exception {
+		String source = ServletActionContext .getRequest().getParameter("source");
+		
+		//1.行业统计
+		List<Object[]> list = customerService.getIndustryCount(source);
+		
+		ActionContext.getContext().put("list", list);
+		return "industryCount";
+	}
+	
+	public String delete() throws Exception {
+		customerService.delete(customer);
+		
+		return "toList";
+		
+		
+	}
 
 
 	@Override
